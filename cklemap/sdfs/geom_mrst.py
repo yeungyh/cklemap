@@ -33,6 +33,7 @@ class GeomMRST(object):
             self.cells.volumes = f.get('cells/volumes')[:]
             self.cells.to_hf = np.concatenate((self.faces.neighbors[:, :self.faces.num_interior].ravel(),
                                                self.faces.neighbors[:, self.faces.num_interior:].max(axis=0)))
+            self.faces.adj_dists = np.linalg.norm(np.diff(self.cells.centroids[:, self.faces.neighbors[:, :self.faces.num_interior]], axis=1), axis=0).ravel()
 
             self.nodes.num = int(f.get('nodes/num')[:].item())
             self.nodes.coords = f.get('nodes/coords')[:]
