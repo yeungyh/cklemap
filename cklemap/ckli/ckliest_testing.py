@@ -37,9 +37,8 @@ def smc_gp(Ypred, CYpred, Nens, prob, rs, randomize_bc=False, randomize_scale=0.
     return np.mean(uens, axis=0), np.cov(uens, rowvar=False, bias=False)
 
 
-def smc_ba(Ypred, PsiY, XiY, Nens, prob, verbose=False):
-    uens = np.vstack([prob.solve(Ypred + PsiY @ XiY[i]) for i in range(Nens)])
-    return uens
+def smc_ba(Ypred, PsiY, XiY, Nens, prob):
+    return np.vstack([prob.solve(Ypred + PsiY @ XiY[i]) for i in range(Nens)])
 
 
 def KL_via_eigh(C, Nxi):

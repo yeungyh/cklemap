@@ -93,10 +93,9 @@ class DASAExpLMAMPS(DASAExpLM):
         dLdp = self.res_sens_param(self.u, p)
         self.dLdp_time += perf_counter() - time_start
         time_start = perf_counter()
-        adj = self.state_sens_param()
-        self.jac[:self.top_size, :] = adj.T @ dLdp
+        adj = self.state_sens_param(dLdp)
+        self.jac[:self.top_size, :] = adj
         self.grad_time += perf_counter() - time_start
-        print(f'adj size = {adj.shape}, nnz = {np.count_nonzero(adj)}')
         self.jac_time += perf_counter() - time_start_all
         return self.jac
 
